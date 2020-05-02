@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/scriptum-desktop",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "scriptum-desktop"
+    }
+  },
+  "defaultProject": "scriptum-desktop",
+  "cli": {
+    "analytics": "d631cfc6-c451-483d-a444-2733872a24a9"
+  }
 }

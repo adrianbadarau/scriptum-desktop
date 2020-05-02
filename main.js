@@ -1,0 +1,57 @@
+const {app, BrowserWindow, ipcMain} = require('electron');
+const url = require('url');
+const path = require('path');
+let win;
+
+function createWindow() {
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    backgroundColor: '#455252',
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
+  win.loadURL(
+    url.format({
+      pathname: path.join(__dirname, 'dist/index.html'),
+      protocol: 'file:',
+      slashes: true
+    })
+  );
+
+  // win.webContents.openDevTools()
+
+  win.on('closed', function () {
+    win = null
+  });
+}
+
+app.on('ready', createWindow);
+
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+});
+
+app.on('activate', function () {
+  if (win === null) createWindow()
+});
+
+function openModal() {
+  const {BrowserWindow} = require('electron');
+  let modal = new BrowserWindow({parent: win, modal: true, show: false})
+  modal.loadURL('https://www.sitepoint.com')
+  modal.once('ready-to-show', () => {
+    modal.show()
+  })
+}
+
+ipcMain.on('openModal', (event, arg) => {
+  openModal()
+})
+
+const Datastore = require('nedb')
+  , db = new Datastore({ filename: `${__dirname}/dist/scriptum.db`, autoload: true });
+
